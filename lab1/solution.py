@@ -22,7 +22,6 @@ def main():
     try:
         args = parser.parse_args()
     except SystemExit:
-        # Если аргументов не хватает, argparse сам выведет краткий usage
         sys.exit(1)
 
     if not os.path.isdir(args.directory):
@@ -35,7 +34,6 @@ def main():
 
     for filename in files:
         if filename.endswith(args.del_suffix):
-            # Вычисляем базу имени
             base_name = filename[:-len(args.del_suffix)]
             control_file = base_name + args.ctrl_suffix
             
