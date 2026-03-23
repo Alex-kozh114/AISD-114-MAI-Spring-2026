@@ -5,17 +5,16 @@ import argparse
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Удаление файлов с заданным суффиксом при наличии контрольного файла.",
-        formatter_class=argparse.RawTextHelpFormatter,
+        description="Delete files with DEL_SUFFIX if a file with the same name and CTRL_SUFFIX exists.",
         add_help=False
     )
-    options = parser.add_argument_group('Options')
-    options.add_argument("-h", "--help", action="help", help="show this help message and exit")
+    group = parser.add_argument_group('Options')
+    group.add_argument("-h", "--help", action="help", help="display this help and exit")
+    parser.add_argument("directory", help="target directory")
+    parser.add_argument("del_suffix", help="suffix of files to delete")
+    parser.add_argument("ctrl_suffix", help="suffix that triggers deletion")
 
-    parser.add_argument("directory", help="Целевая директория для сканирования")
-    parser.add_argument("del_suffix", help="Суффикс файлов, которые нужно удалить (например, .bak)")
-    parser.add_argument("ctrl_suffix", help="Контрольный суффикс (например, .txt)")
-
+    # Если аргументов нет — выводим help (Usage)
     if len(sys.argv) == 1:
         parser.print_help()
         sys.exit(0)
@@ -23,28 +22,28 @@ def main():
     try:
         args = parser.parse_args()
     except SystemExit:
+        # Если аргументов не хватает, argparse сам выведет краткий usage
         sys.exit(1)
 
     if not os.path.isdir(args.directory):
         sys.exit(1)
 
     try:
-        items = os.listdir(args.directory)
+        files = os.listdir(args.directory)
     except OSError:
         sys.exit(1)
 
-    # Основной цикл обработки
-    for item in items:
-        if item.endswith(args.del_suffix):
-            base_name = item[:-len(args.del_suffix)]
-            control_item = base_name + args.ctrl_suffix
-            del_path = os.path.join(args.directory, item)
-            ctrl_path = os.path.join(args.directory, control_item)
+    for filename in files:
+        if filename.endswith(args.del_suffix):
+            # Вычисляем базу имени
+            base_name = filename[:-len(args.del_suffix)]
+            control_file = base_name + args.ctrl_suffix
+            
+            del_path = os.path.join(args.directory, filename)
+            ctrl_path = os.path.join(args.directory, control_file)
+            
             if os.path.isfile(ctrl_path):
-                try:
-                    os.remove(del_path)
-                except OSError:
-                    continue
+                os.remove(del_path)
 
 if __name__ == "__main__":
     main()
