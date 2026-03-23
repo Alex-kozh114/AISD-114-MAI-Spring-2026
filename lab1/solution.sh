@@ -11,14 +11,18 @@ if [[ "$1" == "-h" || "$1" == "--help" || $# -lt 3 ]]; then
     show_help
     exit 0
 fi
+
 DIR="$1"
 DEL_SUF="$2"
 CTRL_SUF="$3"
+
 # Проверка существования директории
 if [[ ! -d "$DIR" ]]; then
     exit 1
 fi
+
 cd "$DIR" || exit 1
+
 for file in *"$DEL_SUF"; do
     [[ -e "$file" ]] || continue
     base="${file%"$DEL_SUF"}"
@@ -27,4 +31,3 @@ for file in *"$DEL_SUF"; do
         rm "$file"
     fi
 done
-exit 
