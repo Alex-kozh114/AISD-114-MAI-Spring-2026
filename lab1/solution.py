@@ -14,7 +14,7 @@ def main():
     parser.add_argument("del_suffix", help="suffix of files to delete")
     parser.add_argument("ctrl_suffix", help="suffix that triggers deletion")
 
-    # Если аргументов нет — выводим help (Usage)
+    # Если аргументов нет — выводим help 
     if len(sys.argv) == 1:
         parser.print_help()
         sys.exit(0)
