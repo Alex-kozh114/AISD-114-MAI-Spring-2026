@@ -21,7 +21,7 @@ typedef struct AirNode {
     struct AirNode *leftWing;
     struct AirNode *rightWing;
 } AirNode;
-
+// Для удобства представим типы самолетов ввиде строки
 const char* getPlaneName(AircraftType t) {
     switch(t) {
         case  AIRBUS:     return "Airbus";
