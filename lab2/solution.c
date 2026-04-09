@@ -97,12 +97,12 @@ void printAirTree(AirNode* root, int depth) {
 bool checkPlanesInRange(AirNode* root, int minIdx, int maxIdx) {
     if (!root) return true;
     
-    // Если узел является листом (терминальной вершиной) [cite: 13]
+    //Если узел является листом 
     if (!root->leftWing && !root->rightWing) {
         return (root->model >= minIdx && root->model <= maxIdx);
     }
     
-    // Рекурсивно проверяем все ветви
+    //проверяем все ветви
     return checkPlanesInRange(root->leftWing, minIdx, maxIdx) && 
            checkPlanesInRange(root->rightWing, minIdx, maxIdx);
 }
