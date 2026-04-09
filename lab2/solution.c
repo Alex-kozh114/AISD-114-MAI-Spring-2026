@@ -55,7 +55,7 @@ AirNode* insertPlane(AirNode* root, AircraftType val) {
     return root;
 }
 
-// Поиск минимального узла для удаления [cite: 9]
+// Поиск минимального узла для удаления 
 AirNode* findMinPlane(AirNode* root) {
     while (root && root->leftWing) root = root->leftWing;
     return root;
